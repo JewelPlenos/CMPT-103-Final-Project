@@ -1,12 +1,7 @@
 # Load route data 
-
+print('Edmonton Transit System') 
+print('---------------------------')
 # Load shapes data
 
 # Reserved for future use (Milestone 2)
-
-# Print shapes_id for a route
-print('hello world')
-
-# hi
-# hi
 print('hi')
