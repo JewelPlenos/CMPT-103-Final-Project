@@ -62,9 +62,9 @@ def main():
     while not quit:
         print('Edmonton Transit System') 
         print('---------------------------------')
-        print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n\n')
+        print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n')
 
-        user_input = input('Enter a command: ')
+        user_input = int(input('Enter a command: '))
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
             print("Invalid option")
         if user_input == 0: 
