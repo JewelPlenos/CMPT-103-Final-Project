@@ -1,6 +1,3 @@
-print('Edmonton Transit System') 
-print('---------------------------------')
-print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n\nEnter Command: 0\n')
 
 # Load route data
 def load_route(routefilename, tripsfilename) -> dict:
@@ -52,15 +49,40 @@ def load_shapes(filename) -> dict:
             shapes_id, lat, lon = parts[0:3] #unpack parts into the needed variables
             coords.append(lat)
             coords.append(lon)
-            shapes_data_dict[shapes_id] += coords
+            if shapes_id not in shapes_data_dict:
+                shapes_data_dict[shapes_id] = []
+            shapes_data_dict[shapes_id] += [coords]   
     return shapes_data_dict
 
 # Reserved for future use (Milestone 2)
 
 # Main 
 def main(): 
-    route_data = load_route('routes.txt', 'trips.txt')
-    shapes_data = load_shapes('shapes.txt')
-    print(shapes_data)
+    quit = False 
+    while not quit:
+        print('Edmonton Transit System') 
+        print('---------------------------------')
+        print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n\n')
+
+        user_input = input('Enter a command: ')
+        if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
+            print("Invalid option")
+        if user_input == 0: 
+            quit = True
+            return
+        if user_input == 1:
+            input_file = input('Enter a filename: ')
+            split = input_file.split('/')
+            try: 
+                route_data = load_route(f'{split[0]}.txt', f'{split[1]}')
+            except TypeError: 
+                print(f"IO Error: couldn't open {input_file}")
+                quit = True
+            except IOError as fail: 
+                print(f"IO Error: couldn't open {input_file}")
+                quit = True
+
+        shapes_data = load_shapes('shapes.txt')
+
 if __name__ == '__main__':
     main()
