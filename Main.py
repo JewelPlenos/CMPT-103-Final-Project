@@ -66,21 +66,26 @@ def main():
 
         user_input = int(input('Enter a command: '))
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
-            print("Invalid option")
+            print("Invalid option\n")
         if user_input == 0: 
             quit = True
             return
         if user_input == 1:
             input_file = input('Enter a filename: ')
             split = input_file.split('/')
+            if input_file == 'data\trips.txt':
+                split[0] = 'routes' 
+                split[1] = 'trips.txt'
             try: 
                 route_data = load_route(f'{split[0]}.txt', f'{split[1]}')
             except TypeError: 
-                print(f"IO Error: couldn't open {input_file}")
+                print(f"IO Error: couldn't open {input_file}\n")
                 quit = True
             except IOError as fail: 
-                print(f"IO Error: couldn't open {input_file}")
+                print(f"IO Error: couldn't open {input_file}\n")
                 quit = True
+            except IndexError: 
+                print(f"IO Error: couldn't open {input_file}\n")
 
         shapes_data = load_shapes('shapes.txt')
 
