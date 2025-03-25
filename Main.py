@@ -55,6 +55,11 @@ def load_shapes(filename) -> dict:
     return shapes_data_dict
 
 def input1(): # Helper function for input == 1
+    '''
+    Purpose: Use user input to run the helper function load_route. -> passes user input as a parameter in load_route
+    Parameter: None
+    Return: Error message or route_data
+    '''
     input_file = input('Enter a filename: ').strip()
     try: 
         if input_file == '':
@@ -70,6 +75,11 @@ def input1(): # Helper function for input == 1
     
 
 def input2(): # Helper function for input == 2 
+    '''
+    Purpose:
+    Parameter:
+    Return:
+    '''
     input_shapes = input('Enter a filename: ').strip()
     try: 
         if input_shapes == '':
@@ -84,10 +94,20 @@ def input2(): # Helper function for input == 2
 
 
 def option3():
+    '''
+    Purpose:
+    Parameter:
+    Return:
+    '''
 # Reserved for future use (Milestone 2)
     pass 
 
-def print_shape_id(route_data):
+def print_shape_id(route_data): # Helper function when input == 4 
+    '''
+    Purpose: Gets user input on specific route number and prints each corresponding shape_id tied to that route
+    Parameter: route_data -> stores {"route #": {"route_name": "Abbottsfield - Downtown - University", "shape_ids": {"008-210-South", "xxx"...}}}
+    Return: Error message or print shape id
+    '''
     input_route = input("Enter route: ").strip()
     try:
         print(f'Shape ids for route [{route_data[input_route]['route_name']}]')
@@ -98,6 +118,11 @@ def print_shape_id(route_data):
         return print('\t** NOT FOUND **')
     
 def print_coords():
+    '''
+    Purpose:
+    Parameter:
+    Return:
+    '''
     pass
 
 # Main 
