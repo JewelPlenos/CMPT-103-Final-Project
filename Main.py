@@ -87,9 +87,16 @@ def option3():
 # Reserved for future use (Milestone 2)
     pass 
 
-def print_shape_id(route_data, shapes_data):
-    pass
-
+def print_shape_id(route_data):
+    input_route = input("Enter route: ").strip()
+    try:
+        print(f'Shape ids for route [{route_data[input_route]['route_name']}]')
+        for item in route_data[input_route]['shape_ids']: 
+            print(f'\t {item}')
+        print()
+    except KeyError:
+        return print('\t** NOT FOUND **')
+    
 def print_coords():
     pass
 
@@ -112,10 +119,13 @@ def main():
         if user_input == 2:
             shapes_data = input2() # uses helper function, input2() --> stores {shape id: [[lat, lon]]} each lat lon is stored in its own list within the list of all lat, lons -> saved in order
         if user_input == 4: 
-            print_shape_id(route_data, shapes_data)
-            pass
+            try:
+                print_shape_id(route_data) # uses helper function -> prints shape id of user inputted route number
+            except UnboundLocalError: # Error checking, will trigger error since it tries to access route_data but it does not exist yet
+                print("Route data hasn't been loaded yet\n")
         if user_input == 5: 
             print_coords()
             pass
+
 if __name__ == '__main__':
     main()
