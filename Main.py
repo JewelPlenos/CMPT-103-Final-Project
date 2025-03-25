@@ -3,8 +3,8 @@
 def load_route(routefilename, tripsfilename) -> dict:
     '''
     Purpose: Read the data in routes.txt and trips.txt and store them in appropriate data structures 
-    Parameters:
-    Return:
+    Parameters: routes.txt and trips.txt -> files
+    Return: dictionary{route_ids: } 
     '''
 
     route_dict = {}
@@ -87,6 +87,9 @@ def option3():
 # Reserved for future use (Milestone 2)
     pass 
 
+def print_shape_id():
+    pass
+
 # Main 
 def main(): 
     quit = False 
@@ -102,10 +105,11 @@ def main():
             quit = True
             return
         if user_input == 1:
-            route_data = input1() # uses helper function, input1() --> stores {route id: route_long_name}
-
+            route_data = input1() # uses helper function, input1() --> stores {route id: {route_name}, (shape_id)}
+            print(route_data)
         if user_input == 2:
-            shapes_data = input2() # uses helper function, input2() --> stores {shape id: [lat, lon]}
-
+            shapes_data = input2() # uses helper function, input2() --> stores {shape id: [[lat, lon]]} each lat lon is stored in its own list within the list of all lat, lons -> saved in order
+        if user_input == 4: 
+            pass
 if __name__ == '__main__':
     main()
