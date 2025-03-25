@@ -42,7 +42,7 @@ def load_shapes(filename) -> dict:
     shapes_data_dict = {} 
     with open(filename, 'r') as file: 
         for line in file: 
-            coords = []
+            coords = [] # Initialize list to store lat, lon 
             parts = line.split(',')
             if parts[0] == 'shape_id': 
                 continue # skip row 1 
@@ -51,7 +51,7 @@ def load_shapes(filename) -> dict:
             coords.append(lon)
             if shapes_id not in shapes_data_dict:
                 shapes_data_dict[shapes_id] = []
-            shapes_data_dict[shapes_id] += [coords]   
+            shapes_data_dict[shapes_id] += [coords] # Each individual coord (lat,lon) is added as a list to its respective shapes_id
     return shapes_data_dict
 
 # Reserved for future use (Milestone 2)
@@ -71,17 +71,31 @@ def main():
             quit = True
             return
         if user_input == 1:
-            input_file = input('Enter a filename: ')
+            input_file = input('Enter a filename: ').strip()
             try: 
+                if input_file == '':
+                    input_file = 'data/trips.txt'
                 route_data = load_route(f'data/routes.txt', f'{input_file}')
+                print(f'Data from {input_file} loaded\n')
             except TypeError: 
                 print(f"IO Error: couldn't open {input_file}\n")
                 quit = True
             except IOError as fail: 
                 print(f"IO Error: couldn't open {input_file}\n")
                 quit = True
-
-        shapes_data = load_shapes('shapes.txt')
+        if user_input == 2:
+            input_shapes = input('Enter a filename: ').strip()
+            try: 
+                if input_shapes == '':
+                    input_shapes = 'data/shapes.txt'
+                shapes_data = load_shapes(f'{input_shapes}')
+                print(f"Data from {input_shapes} loaded\n")
+            except TypeError: 
+                print(f"IO Error: couldn't open {input_shapes}\n")
+                quit = True
+            except IOError as fail: 
+                print(f"IO Error: couldn't open {input_shapes}\n")
+                quit = True
 
 if __name__ == '__main__':
     main()
