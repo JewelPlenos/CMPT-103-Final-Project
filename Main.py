@@ -54,7 +54,38 @@ def load_shapes(filename) -> dict:
             shapes_data_dict[shapes_id] += [coords] # Each individual coord (lat,lon) is added as a list to its respective shapes_id
     return shapes_data_dict
 
+def input1(): # Helper function for input == 1
+    input_file = input('Enter a filename: ').strip()
+    try: 
+        if input_file == '':
+            input_file = 'data/trips.txt'
+        route_data = load_route(f'data/routes.txt', f'{input_file}') # Utilizes load_route helper function 
+        print(f'Data from {input_file} loaded\n')
+        return route_data 
+
+    except TypeError: 
+        return print(f"IO Error: couldn't open {input_file}\n")
+    except IOError as fail: 
+        return print(f"IO Error: couldn't open {input_file}\n")
+    
+
+def input2(): # Helper function for input == 2 
+    input_shapes = input('Enter a filename: ').strip()
+    try: 
+        if input_shapes == '':
+            input_shapes = 'data/shapes.txt'
+        shapes_data = load_shapes(f'{input_shapes}') # Utilizes load_shapes helper function
+        print(f"Data from {input_shapes} loaded\n")
+        return shapes_data
+    except TypeError: 
+        return print(f"IO Error: couldn't open {input_shapes}\n")
+    except IOError as fail: 
+        return print(f"IO Error: couldn't open {input_shapes}\n")
+
+
+def option3():
 # Reserved for future use (Milestone 2)
+    pass 
 
 # Main 
 def main(): 
@@ -67,35 +98,14 @@ def main():
         user_input = int(input('Enter a command: '))
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
             print("Invalid option\n")
-        if user_input == 0: 
+        if user_input == 0: # end loop
             quit = True
             return
         if user_input == 1:
-            input_file = input('Enter a filename: ').strip()
-            try: 
-                if input_file == '':
-                    input_file = 'data/trips.txt'
-                route_data = load_route(f'data/routes.txt', f'{input_file}')
-                print(f'Data from {input_file} loaded\n')
-            except TypeError: 
-                print(f"IO Error: couldn't open {input_file}\n")
-                quit = True
-            except IOError as fail: 
-                print(f"IO Error: couldn't open {input_file}\n")
-                quit = True
+            route_data = input1() # uses helper function, input1() --> stores {route id: route_long_name}
+
         if user_input == 2:
-            input_shapes = input('Enter a filename: ').strip()
-            try: 
-                if input_shapes == '':
-                    input_shapes = 'data/shapes.txt'
-                shapes_data = load_shapes(f'{input_shapes}')
-                print(f"Data from {input_shapes} loaded\n")
-            except TypeError: 
-                print(f"IO Error: couldn't open {input_shapes}\n")
-                quit = True
-            except IOError as fail: 
-                print(f"IO Error: couldn't open {input_shapes}\n")
-                quit = True
+            shapes_data = input2() # uses helper function, input2() --> stores {shape id: [lat, lon]}
 
 if __name__ == '__main__':
     main()
