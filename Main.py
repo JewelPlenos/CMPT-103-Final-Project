@@ -72,6 +72,9 @@ def input1(): # Helper function for input == 1
         return print(f"IO Error: couldn't open {input_file}\n")
     except IOError as fail: 
         return print(f"IO Error: couldn't open {input_file}\n")
+    except IndexError: # Index error happens when you try to input shapes.txt instead of trips.txt
+        return print(f"IO Error: couldn't open {input_file}\n")
+
     
 
 def input2(): # Helper function for input == 2 
@@ -90,10 +93,13 @@ def input2(): # Helper function for input == 2
     except TypeError: 
         return print(f"IO Error: couldn't open {input_shapes}\n")
     except IOError as fail: 
+        return print(f"IO Error: couldn't open {input_shapes}\n")    
+    except IndexError: # Index error happens when you try to input trips.txt instead of shapes.txt
         return print(f"IO Error: couldn't open {input_shapes}\n")
 
 
-def option3():
+
+def option3(): # Helper function when input == 3
     '''
     Purpose:
     Parameter:
@@ -115,15 +121,23 @@ def print_shape_id(route_data): # Helper function when input == 4
             print(f'\t {item}')
         print()
     except KeyError:
-        return print('\t** NOT FOUND **')
+        return print('\t** NOT FOUND **\n')
     
-def print_coords():
+def print_coords(shapes_data): # Helper function when input == 5 
     '''
-    Purpose:
-    Parameter:
-    Return:
+    Purpose: Gets user input on specific shape id, prints every corresponding coordinate 
+    Parameter: shapes_data --> stores {shape id: [[lat, lon]]} each lat lon is stored in its own list within the list of all lat, lons -> saved in order
+    Return: Error message or prints coords
     '''
-    pass
+    input_id = input("Enter shape ID: ").strip()
+
+    try:
+        print(f'Shape id coordinates for {input_id} are:\n')
+        for item in shapes_data[input_id]: 
+            print(f'\t({item[0]}, {item[1]})')
+        print()
+    except KeyError:
+        return print('\t** NOT FOUND **\n')
 
 # Main 
 def main(): 
@@ -148,9 +162,11 @@ def main():
                 print_shape_id(route_data) # uses helper function -> prints shape id of user inputted route number
             except UnboundLocalError: # Error checking, will trigger error since it tries to access route_data but it does not exist yet
                 print("Route data hasn't been loaded yet\n")
-        if user_input == 5: 
-            print_coords()
-            pass
+        if user_input == 5:             
+            try:
+                print_coords(shapes_data) # uses helper function -> prints coordinates of user inputted shape_id
+            except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
+                print("Shape ID data hasn't been loaded yet\n")
 
 if __name__ == '__main__':
     main()
