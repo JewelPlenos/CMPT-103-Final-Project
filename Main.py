@@ -79,9 +79,9 @@ def input1(): # Helper function for input == 1
 
 def input2(): # Helper function for input == 2 
     '''
-    Purpose:
-    Parameter:
-    Return:
+    Purpose: Get user input on which filename to run, utilize helper function load_shapes that saves data from filename to a dictionary
+    Parameter: None
+    Return: Error message or data from shapes.txt
     '''
     input_shapes = input('Enter a filename: ').strip()
     try: 
@@ -96,7 +96,6 @@ def input2(): # Helper function for input == 2
         return print(f"IO Error: couldn't open {input_shapes}\n")    
     except IndexError: # Index error happens when you try to input trips.txt instead of shapes.txt
         return print(f"IO Error: couldn't open {input_shapes}\n")
-
 
 
 def option3(): # Helper function when input == 3
@@ -139,6 +138,23 @@ def print_coords(shapes_data): # Helper function when input == 5
     except KeyError:
         return print('\t** NOT FOUND **\n')
 
+def option6(): # Helper function when input == 6
+    # Reserved for milestone 2 
+    pass 
+
+def option7(): # Helper function when input ==  7
+    # Save routes and shapes in a pickle
+    pass
+
+def option8(): # Helper function when input == 8
+    # Load routes and shapes from a pickle
+    pass
+
+def option9(): # Helper function when input == 9
+    # Reserved for milestone 2
+    pass
+
+
 # Main 
 def main(): 
     quit = False 
@@ -147,7 +163,12 @@ def main():
         print('---------------------------------')
         print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n')
 
-        user_input = int(input('Enter a command: '))
+        try:
+            user_input = int(input('Enter a command: ')) # Will result in an error if input is not a number since it changes input to an int
+        except ValueError: 
+            user_input = None # Updates variable to none, when it checks if variable is in the valid list, it will print error message since its not valid
+        except UnboundLocalError:
+            user_input = None        
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
             print("Invalid option\n")
         if user_input == 0: # end loop
