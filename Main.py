@@ -1,3 +1,7 @@
+# ------------------------------- # 
+# Group members: Jewel Plenos, Tommy Tran 
+# Programming Project - Milestone#1
+# ------------------------------- #
 
 # Load route data
 def load_route(routefilename, tripsfilename) -> dict:
