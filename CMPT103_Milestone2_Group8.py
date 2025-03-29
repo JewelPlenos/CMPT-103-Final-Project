@@ -1,7 +1,9 @@
 # ------------------------------- # 
 # Group members: Jewel Plenos, Tommy Tran 
-# Programming Project - Milestone#2
+# Programming Project - Milestone#1
 # ------------------------------- #
+
+from datetime import date
 
 # Load route data
 def load_route(routefilename, tripsfilename) -> dict:
@@ -58,6 +60,17 @@ def load_shapes(filename) -> dict:
             shapes_data_dict[shapes_id] += [coords] # Each individual coord (lat,lon) is added as a list to its respective shapes_id
     return shapes_data_dict
 
+def load_disruption(filename):
+    date_location = {}
+    with open(filename, 'r') as file:
+        for line in file:
+            parts = line.split(',')
+            finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
+            date_object = (date({finish_date[2]}, {finish_date[0]}, {finish_date[1].strip(',')})) # --> (year, month, day)
+            location = parts[-1] # --> POINT (-113.58983573962888 53.425074385191095)
+            
+    return date_location
+
 def input1(): # Helper function for input == 1
     '''
     Purpose: Use user input to run the helper function load_route. -> passes user input as a parameter in load_route
@@ -102,7 +115,7 @@ def input2(): # Helper function for input == 2
         return print(f"IO Error: couldn't open {input_shapes}\n")
 
 
-def option3(): # Helper function when input == 3
+def input3(): # Helper function when input == 3
     '''
     Purpose:
     Parameter:
@@ -146,10 +159,25 @@ def option6(): # Helper function when input == 6
     # Reserved for milestone 2 
     pass 
 
-def option7(): # Helper function when input ==  7
-    # Save routes and shapes in a pickle
-    pass
-
+def option7(route_data, shapes_data): # Helper function when input ==  7
+    '''
+    Purpose: Save routes and shapes into a pickle file
+    Parameter: route_data, dict containing route data
+    shapes_data, dict containing shapes data
+    Return: None
+    '''
+    import pickle
+    filename = input("Enter a filename: ").strip()
+    if filename == "":  # If filename empty use default name
+        filename = "etsdata.p"
+    
+    try:  
+        with open(filename, 'wb') as f:  # Write to file in binary
+            pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Serialize and save dict
+        print(f"Data structures successfully written to {filename}\n")
+    except Exception as e:  # Return error if any issues arise
+        print(f"Error writing to file: {e}\n")
+ 
 def option8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
     pass
@@ -192,6 +220,11 @@ def main():
                 print_coords(shapes_data) # uses helper function -> prints coordinates of user inputted shape_id
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
+        if user_input == 7:
+            try:
+                option7(route_data, shapes_data)
+            except UnboundLocalError: 
+                print("Route data and Shape ID has not been loaded yet\n")
 
 if __name__ == '__main__':
     main()
