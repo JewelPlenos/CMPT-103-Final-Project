@@ -146,10 +146,11 @@ def option6(): # Helper function when input == 6
     # Reserved for milestone 2 
     pass 
 
-def option7(): # Helper function when input ==  7
+def option7(route_data, shapes_data): # Helper function when input ==  7
     '''
-    Purpose: Save royts and shapes into a pickle file
-    Parameter: None
+    Purpose: Save routes and shapes into a pickle file
+    Parameter: route_data, dict containing route data
+    shapes_data, dict containing shapes data
     Return: None
     '''
     import pickle
@@ -163,12 +164,12 @@ def option7(): # Helper function when input ==  7
         print("Necessary data has not been loaded in yet, please load route data (option 1 and shapes data (option 2) first.\n")
         return
     
-    try:
-        with open(filename, 'wb') as f:  # Open file and write in binary
-            pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Create dict to store both data's
+    try:  
+        with open(filename, 'wb') as f:  # Write to file in binary
+            pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Serialize and save dict
         print(f"Data structures successfully written to {filename}\n")
-    except Exception as e:
-        print(f"Error writing to file: {e}\n")  # Display error if there are issues
+    except Exception as e:  # Return error if any issues arise
+        print(f"Error writing to file: {e}\n")
  
 def option8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
@@ -213,7 +214,7 @@ def main():
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
         if user_input == 7:
-            option7()
+            option7(route_data, shapes_data)
 
 if __name__ == '__main__':
     main()
