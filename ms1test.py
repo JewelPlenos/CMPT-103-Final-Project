@@ -157,12 +157,6 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
     filename = input("Enter a filename: ").strip()
     if filename == "":  # If filename empty use default name
         filename = "etsdata.p"
-    try:  # If routes and shapes haven't been loaded return error
-        route_data
-        shapes_data
-    except NameError:
-        print("Necessary data has not been loaded in yet, please load route data (option 1 and shapes data (option 2) first.\n")
-        return
     
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
@@ -214,7 +208,10 @@ def main():
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
         if user_input == 7:
-            option7(route_data, shapes_data)
+            try:
+                option7(route_data, shapes_data)
+            except UnboundLocalError: 
+                print("Route data and Shape ID has not been loaded yet\n")
 
 if __name__ == '__main__':
     main()
