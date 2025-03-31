@@ -69,7 +69,7 @@ def load_disruption(filename):
             date_object = (date({finish_date[2]}, {finish_date[0]}, {finish_date[1].strip(',')})) # --> (year, month, day)
             location = parts[-1] # --> POINT (-113.58983573962888 53.425074385191095)
             coords = location.split(' ')
-            lat, lon = coords[1].lstrip('('), coords[2].strip(')')
+            lon, lat = coords[1].lstrip('('), coords[2].strip(')')
             date_location[date_object] = lat, lon
     return date_location
 
@@ -157,11 +157,11 @@ def print_coords(shapes_data): # Helper function when input == 5
     except KeyError:
         return print('\t** NOT FOUND **\n')
 
-def option6(): # Helper function when input == 6
+def input6(): # Helper function when input == 6
     # Reserved for milestone 2 
     pass 
 
-def option7(route_data, shapes_data): # Helper function when input ==  7
+def input7(route_data, shapes_data): # Helper function when input ==  7
     '''
     Purpose: Save routes and shapes into a pickle file
     Parameter: route_data, dict containing route data
@@ -180,11 +180,39 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
     except Exception as e:  # Return error if any issues arise
         print(f"Error writing to file: {e}\n")
  
-def option8(): # Helper function when input == 8
+def input8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
-    pass
+    '''
+    Purpose: Load routes and shapes from a pickle file
+    Parameter: None
+    Return: Tuple containing route and shapes data
+    '''
+    import pickle
+    
+    filename = input("Enter a filename: ").strip()  # Prompt user for filename
+    if filename == "":
+        filename = "data/etsdata.p"
+        
+    try:  # Attempt to open pickle file and read binary
+        with open(filename, 'rb') as f:
+            loaded_data = pickle.load(f)
+        
+        # Inform success    
+        print(f"Data successfully loaded from {filename}\n")
+        
+        # Retrieve route and shapes from dict and if not present default to empty dict
+        route_data = loaded_data.get("route_data", {})
+        shapes_data = loaded_data.get("shapes_data", {})
+         # Return as tuple
+        return route_data, shapes_data
+    
+    except Exception as e:  #  If file not found or invalid filename display error
+        print(f"Error reading from file: {e}\n")
+        
+        return {}, {}  # Return empty dictionaries so program doesn't crash
 
-def option9(): # Helper function when input == 9
+
+def input9(): # Helper function when input == 9
     # Reserved for milestone 2
     pass
 
@@ -224,9 +252,11 @@ def main():
                 print("Shape ID data hasn't been loaded yet\n")
         if user_input == 7:
             try:
-                option7(route_data, shapes_data)
+                input7(route_data, shapes_data)
             except UnboundLocalError: 
                 print("Route data and Shape ID has not been loaded yet\n")
+        if user_input == 8:
+            route_data, shapes_data = input8()
 
 if __name__ == '__main__':
     main()
