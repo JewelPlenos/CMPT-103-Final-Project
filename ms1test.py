@@ -156,7 +156,7 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
     import pickle
     filename = input("Enter a filename: ").strip()
     if filename == "":  # If filename empty use default name
-        filename = "etsdata.p"
+        filename = "data/etsdata.p"
     
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
@@ -167,8 +167,35 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
  
 def option8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
-    pass
-
+    '''
+    Purpose: Load routes and shapes from a pickle file
+    Parameter: None
+    Return: Tuple containing route and shapes data
+    '''
+    import pickle
+    
+    filename = input("Enter a filename: ").strip()  # Prompt user for filename
+    if filename == "":
+        filename = "data/etsdata.p"
+        
+    try:  # Attempt to open pickle file and read binary
+        with open(filename, 'rb') as f:
+            loaded_data = pickle.load(f)
+        
+        # Inform success    
+        print(f"Data successfull loaded from {filename}\n")
+        
+        # Retrieve route and shapes from dict and if not present default to empty dict
+        route_data = loaded_data.get("route_data", {})
+        shapes_data = loaded_data.get("shapes_data", {})
+         # Return as tuple
+        return route_data, shapes_data
+    
+    except Exception as e:  #  If file not found or invalid filename display error
+        print(f"Error reading from file: {e}\n")
+        
+        return {}, {}  # Return empty dictionaries so program doesn't crash
+    
 def option9(): # Helper function when input == 9
     # Reserved for milestone 2
     pass
@@ -212,6 +239,8 @@ def main():
                 option7(route_data, shapes_data)
             except UnboundLocalError: 
                 print("Route data and Shape ID has not been loaded yet\n")
+        if user_input == 8:
+            route_data, shapes_data = option8()
 
 if __name__ == '__main__':
     main()
