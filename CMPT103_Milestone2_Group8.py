@@ -68,7 +68,9 @@ def load_disruption(filename):
             finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
             date_object = (date({finish_date[2]}, {finish_date[0]}, {finish_date[1].strip(',')})) # --> (year, month, day)
             location = parts[-1] # --> POINT (-113.58983573962888 53.425074385191095)
-            
+            coords = location.split(' ')
+            lat, lon = coords[1].lstrip('('), coords[2].strip(')')
+            date_location[date_object] = lat, lon
     return date_location
 
 def input1(): # Helper function for input == 1
