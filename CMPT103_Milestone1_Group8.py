@@ -102,7 +102,7 @@ def input2(): # Helper function for input == 2
         return print(f"IO Error: couldn't open {input_shapes}\n")
 
 
-def option3(): # Helper function when input == 3
+def input3(): # Helper function when input == 3
     '''
     Purpose:
     Parameter:
@@ -142,19 +142,61 @@ def print_coords(shapes_data): # Helper function when input == 5
     except KeyError:
         return print('\t** NOT FOUND **\n')
 
-def option6(): # Helper function when input == 6
+def input6(): # Helper function when input == 6
     # Reserved for milestone 2 
     pass 
 
-def option7(): # Helper function when input ==  7
-    # Save routes and shapes in a pickle
-    pass
-
-def option8(): # Helper function when input == 8
+def input7(route_data, shapes_data): # Helper function when input ==  7
+    '''
+    Purpose: Save routes and shapes into a pickle file
+    Parameter: route_data, dict containing route data
+    shapes_data, dict containing shapes data
+    Return: None
+    '''
+    import pickle
+    filename = input("Enter a filename: ").strip()
+    if filename == "":  # If filename empty use default name
+        filename = "etsdata.p"
+    
+    try:  
+        with open(filename, 'wb') as f:  # Write to file in binary
+            pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Serialize and save dict
+        print(f"Data structures successfully written to {filename}\n")
+    except Exception as e:  # Return error if any issues arise
+        print(f"Error writing to file: {e}\n")
+ 
+def input8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
-    pass
+    '''
+    Purpose: Load routes and shapes from a pickle file
+    Parameter: None
+    Return: Tuple containing route and shapes data
+    '''
+    import pickle
+    
+    filename = input("Enter a filename: ").strip()  # Prompt user for filename
+    if filename == "":
+        filename = "data/etsdata.p"
+        
+    try:  # Attempt to open pickle file and read binary
+        with open(filename, 'rb') as f:
+            loaded_data = pickle.load(f)
+        
+        # Inform success    
+        print(f"Data successfully loaded from {filename}\n")
+        
+        # Retrieve route and shapes from dict and if not present default to empty dict
+        route_data = loaded_data.get("route_data", {})
+        shapes_data = loaded_data.get("shapes_data", {})
+         # Return as tuple
+        return route_data, shapes_data
+    
+    except Exception as e:  #  If file not found or invalid filename display error
+        print(f"Error reading from file: {e}\n")
+        
+        return {}, {}  # Return empty dictionaries so program doesn't crash
 
-def option9(): # Helper function when input == 9
+def input9(): # Helper function when input == 9
     # Reserved for milestone 2
     pass
 
@@ -192,6 +234,14 @@ def main():
                 print_coords(shapes_data) # uses helper function -> prints coordinates of user inputted shape_id
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
+        if user_input == 7:
+            try:
+                input7(route_data, shapes_data)
+            except UnboundLocalError: 
+                print("Route data and Shape ID has not been loaded yet\n")
+        if user_input == 8:
+            route_data, shapes_data = input8()
+
 
 if __name__ == '__main__':
     main()
