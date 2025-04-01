@@ -240,20 +240,20 @@ def main():
     quit = False 
     while not quit:
         print("""
-        Edmonton Transit System
-        ------------------------------------
-        (1) Load route data
-        (2) Load shapes data
-        (3) Load disruption datasss
+Edmonton Transit System
+------------------------------------
+(1) Load route data
+(2) Load shapes data
+(3) Load disruption data
         
-        (4) Print shape IDs for a route
-        (5) Print coordinates for a shape ID
-        (6) Reserved for future use
+(4) Print shape IDs for a route
+(5) Print coordinates for a shape ID
+(6) Reserved for future use
         
-        (7) Save routes and shapes in  a pickle
-        (8) Load routes and shapes from a pickle
+(7) Save routes and shapes in  a pickle
+(8) Load routes and shapes from a pickle
         
-        (9) Reserved for future use
+(9) Reserved for future use
         """)
 
         try:
