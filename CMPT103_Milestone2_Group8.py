@@ -182,8 +182,8 @@ def input6(route_data, shapes_data): # Helper function when input == 6
     shape_longest = 0
     try:
         for item in route_data[input_route]['shape_ids']: 
+            print(item)
             for coords in shapes_data[item]:
-                print(coords)
                 current_length = len(coords)
                 if current_length > length_longest: 
                     length_longest = current_length
