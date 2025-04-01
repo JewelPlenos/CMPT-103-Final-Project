@@ -112,7 +112,7 @@ def input2(): # Helper function for input == 2
         if input_shapes == '':
             input_shapes = 'data/shapes.txt'
         shapes_data = load_shapes(f'{input_shapes}') # Utilizes load_shapes helper function
-        print(f"Data from {input_shapes} loaded\n")
+        print(f"Data from {input_shapes} loaded")
         return shapes_data
     except TypeError: 
         return print(f"IO Error: couldn't open {input_shapes}")
@@ -157,7 +157,7 @@ def print_shape_id(route_data): # Helper function when input == 4
             print(f'\t {item}')
         print()
     except KeyError:
-        return print('\t** NOT FOUND **\n')
+        return print('\t** NOT FOUND **')
     
 def print_coords(shapes_data): # Helper function when input == 5 
     '''
@@ -168,7 +168,7 @@ def print_coords(shapes_data): # Helper function when input == 5
     input_id = input("Enter shape ID: ").strip()
 
     try:
-        print(f'Shape id coordinates for {input_id} are:\n')
+        print(f'Shape id coordinates for {input_id} are:')
         for item in shapes_data[input_id]: 
             print(f'\t({item[0]}, {item[1]})')
         print()
@@ -176,7 +176,7 @@ def print_coords(shapes_data): # Helper function when input == 5
         return print('\t** NOT FOUND **')
 
 def input6(): # Helper function when input == 6
-    # Reserved for milestone 2 
+
     pass 
 
 def input7(route_data, shapes_data): # Helper function when input ==  7
@@ -248,12 +248,13 @@ Edmonton Transit System
         
 (4) Print shape IDs for a route
 (5) Print coordinates for a shape ID
-(6) Reserved for future use
+(6) Find longest shape for route
         
 (7) Save routes and shapes in  a pickle
 (8) Load routes and shapes from a pickle
         
-(9) Reserved for future use
+(9) Interactive map
+(0) Quit
         """)
 
         try:
@@ -286,6 +287,8 @@ Edmonton Transit System
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
 
+        if user_input == 6:
+            pass
 
         if user_input == 7:
             try:
