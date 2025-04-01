@@ -235,7 +235,7 @@ def input8(): # Helper function when input == 8
         shapes_data = loaded_data.get("shapes_data", {})
         disruption_data = loaded_data.get("disruption_data", {})
          # Return as tuple
-        return route_data, shapes_data
+        return route_data, shapes_data, disruption_data
     
     except Exception as e:  #  If file not found or invalid filename display error
         print(f"Error reading from file: {e}")
