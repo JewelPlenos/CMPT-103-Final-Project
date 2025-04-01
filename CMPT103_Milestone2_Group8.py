@@ -239,9 +239,22 @@ def input9(): # Helper function when input == 9
 def main(): 
     quit = False 
     while not quit:
-        print('Edmonton Transit System') 
-        print('---------------------------------')
-        print('(1) Load route data\n(2) Load shapes data\n(3) Load disruptions data\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n')
+        print("""
+        Edmonton Transit System
+        ------------------------------------
+        (1) Load route data
+        (2) Load shapes data
+        (3) Load disruption datasss
+        
+        (4) Print shape IDs for a route
+        (5) Print coordinates for a shape ID
+        (6) Reserved for future use
+        
+        (7) Save routes and shapes in  a pickle
+        (8) Load routes and shapes from a pickle
+        
+        (9) Reserved for future use
+        """)
 
         try:
             user_input = int(input('Enter a command: ')) # Will result in an error if input is not a number since it changes input to an int
