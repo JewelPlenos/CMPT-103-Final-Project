@@ -3,6 +3,8 @@
 # Programming Project - Milestone#1
 # ------------------------------- #
 
+from datetime import date
+
 # Load route data
 def load_route(routefilename, tripsfilename) -> dict:
     '''
@@ -58,6 +60,21 @@ def load_shapes(filename) -> dict:
             shapes_data_dict[shapes_id] += [coords] # Each individual coord (lat,lon) is added as a list to its respective shapes_id
     return shapes_data_dict
 
+
+def load_disruption(filename):
+    month2number = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
+    date_location = {}
+    with open(filename, 'r') as file:
+        for line in file:
+            parts = line.split(',')
+            finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
+            date_object = date(int(finish_date[2]), month2number[finish_date[0]], int(finish_date[1].strip(','))) # --> date(year, month, day) = 2026-09-30
+            location = parts[-1] # --> 'POINT (-113.58983573962888 53.425074385191095)'
+            coords = location.split(' ')
+            lon, lat = float(coords[1].lstrip('(')), float(coords[2].strip(')')) # unpack, change to float and remove extra characters 
+            date_location[date_object] = lat, lon # --> {2026-09-30: 53.425074385191095, -113.58983573962888}
+    return date_location
+
 def input1(): # Helper function for input == 1
     '''
     Purpose: Use user input to run the helper function load_route. -> passes user input as a parameter in load_route
@@ -102,14 +119,28 @@ def input2(): # Helper function for input == 2
         return print(f"IO Error: couldn't open {input_shapes}\n")
 
 
-def option3(): # Helper function when input == 3
+def input3() -> dict: # Helper function when input == 3
     '''
-    Purpose:
-    Parameter:
-    Return:
+    Purpose: Calls load_disruption when input = 3, saves date of disruption and its corresponding coordinate
+    Parameter: None
+    Return: Dictionary of disruptions and locations
     '''
-# Reserved for future use (Milestone 2)
-    pass 
+    input_file = input('Enter a filename: ').strip()
+    try: 
+        if input_file == '':
+            input_file = 'data/traffic_disruptions.txt'
+        disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
+        print(f'Data from {input_file} loaded\n')
+        return disruption_data
+
+    except TypeError: 
+        return print(f"skib IO Error: couldn't open {input_file}\n")
+    except IOError as fail: 
+        return print(f"idy IO Error: couldn't open {input_file}\n")
+    except IndexError as fail: 
+        print(fail)
+        return print(f"toil IO Error: couldn't open {input_file}\n")
+
 
 def print_shape_id(route_data): # Helper function when input == 4 
     '''
@@ -142,11 +173,11 @@ def print_coords(shapes_data): # Helper function when input == 5
     except KeyError:
         return print('\t** NOT FOUND **\n')
 
-def option6(): # Helper function when input == 6
+def input6(): # Helper function when input == 6
     # Reserved for milestone 2 
     pass 
 
-def option7(route_data, shapes_data): # Helper function when input ==  7
+def input7(route_data, shapes_data): # Helper function when input ==  7
     '''
     Purpose: Save routes and shapes into a pickle file
     Parameter: route_data, dict containing route data
@@ -156,7 +187,7 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
     import pickle
     filename = input("Enter a filename: ").strip()
     if filename == "":  # If filename empty use default name
-        filename = "data/etsdata.p"
+        filename = "etsdata.p"
     
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
@@ -165,7 +196,7 @@ def option7(route_data, shapes_data): # Helper function when input ==  7
     except Exception as e:  # Return error if any issues arise
         print(f"Error writing to file: {e}\n")
  
-def option8(): # Helper function when input == 8
+def input8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
     '''
     Purpose: Load routes and shapes from a pickle file
@@ -183,7 +214,7 @@ def option8(): # Helper function when input == 8
             loaded_data = pickle.load(f)
         
         # Inform success    
-        print(f"Data successfull loaded from {filename}\n")
+        print(f"Data successfully loaded from {filename}\n")
         
         # Retrieve route and shapes from dict and if not present default to empty dict
         route_data = loaded_data.get("route_data", {})
@@ -195,8 +226,9 @@ def option8(): # Helper function when input == 8
         print(f"Error reading from file: {e}\n")
         
         return {}, {}  # Return empty dictionaries so program doesn't crash
-    
-def option9(): # Helper function when input == 9
+
+
+def input9(): # Helper function when input == 9
     # Reserved for milestone 2
     pass
 
@@ -212,9 +244,10 @@ def main():
         try:
             user_input = int(input('Enter a command: ')) # Will result in an error if input is not a number since it changes input to an int
         except ValueError: 
-            user_input = None # Updates variable to none, when it checks if variable is in the valid list, it will print error message since its not valid
+            user_input = None # Updates variable to none, when it checks if variable is in the valid list, it will print error message since None is not valid
         except UnboundLocalError:
             user_input = None        
+
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
             print("Invalid option\n")
         if user_input == 0: # end loop
@@ -224,6 +257,9 @@ def main():
             route_data = input1() # uses helper function, input1() --> stores {"route #": {"route_name": "Abbottsfield - Downtown - University", "shape_ids": {"008-210-South", "xxx"...}}}
         if user_input == 2:
             shapes_data = input2() # uses helper function, input2() --> stores {shape id: [[lat, lon]]} each lat lon is stored in its own list within the list of all lat, lons -> saved in order
+        if user_input == 3: 
+            disruption_data = input3() # uses helper function, input3() --> stores {2026-09-30: 53.425074385191095, -113.58983573962888}
+
         if user_input == 4: 
             try:
                 print_shape_id(route_data) # uses helper function -> prints shape id of user inputted route number
@@ -234,13 +270,15 @@ def main():
                 print_coords(shapes_data) # uses helper function -> prints coordinates of user inputted shape_id
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
                 print("Shape ID data hasn't been loaded yet\n")
+
+
         if user_input == 7:
             try:
-                option7(route_data, shapes_data)
+                input7(route_data, shapes_data)
             except UnboundLocalError: 
                 print("Route data and Shape ID has not been loaded yet\n")
         if user_input == 8:
-            route_data, shapes_data = option8()
+            route_data, shapes_data = input8()
 
 if __name__ == '__main__':
     main()
