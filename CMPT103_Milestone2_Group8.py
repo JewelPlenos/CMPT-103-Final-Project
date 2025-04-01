@@ -263,7 +263,7 @@ Edmonton Transit System
 (5) Print coordinates for a shape ID
 (6) Find longest shape for route
         
-(7) Save routes and shapes in  a pickle
+(7) Save routes and shapes in a pickle
 (8) Load routes and shapes from a pickle
         
 (9) Interactive map
