@@ -89,15 +89,15 @@ def input1(): # Helper function for input == 1
         if input_file == '':
             input_file = 'data/trips.txt'
         route_data = load_route(f'data/routes.txt', f'{input_file}') # Utilizes load_route helper function 
-        print(f'Data from {input_file} loaded\n')
+        print(f'Data from {input_file} loaded')
         return route_data 
 
     except TypeError: 
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
     except IOError as fail: 
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
     except IndexError: # Index error happens when you try to input shapes.txt instead of trips.txt
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
 
     
 
@@ -115,11 +115,11 @@ def input2(): # Helper function for input == 2
         print(f"Data from {input_shapes} loaded\n")
         return shapes_data
     except TypeError: 
-        return print(f"IO Error: couldn't open {input_shapes}\n")
+        return print(f"IO Error: couldn't open {input_shapes}")
     except IOError as fail: 
-        return print(f"IO Error: couldn't open {input_shapes}\n")    
+        return print(f"IO Error: couldn't open {input_shapes}")    
     except IndexError: # Index error happens when you try to input trips.txt instead of shapes.txt
-        return print(f"IO Error: couldn't open {input_shapes}\n")
+        return print(f"IO Error: couldn't open {input_shapes}")
 
 
 def input3() -> dict: # Helper function when input == 3
@@ -133,15 +133,15 @@ def input3() -> dict: # Helper function when input == 3
         if input_file == '':
             input_file = 'data/traffic_disruptions.txt'
         disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
-        print(f'Data from {input_file} loaded\n')
+        print(f'Data from {input_file} loaded')
         return disruption_data
 
     except TypeError: 
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
     except IOError as fail: 
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
     except IndexError: 
-        return print(f"IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}")
 
 
 def print_shape_id(route_data): # Helper function when input == 4 
@@ -173,7 +173,7 @@ def print_coords(shapes_data): # Helper function when input == 5
             print(f'\t({item[0]}, {item[1]})')
         print()
     except KeyError:
-        return print('\t** NOT FOUND **\n')
+        return print('\t** NOT FOUND **')
 
 def input6(): # Helper function when input == 6
     # Reserved for milestone 2 
@@ -194,9 +194,9 @@ def input7(route_data, shapes_data): # Helper function when input ==  7
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
             pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Serialize and save dict
-        print(f"Data structures successfully written to {filename}\n")
+        print(f"Data structures successfully written to {filename}")
     except Exception as e:  # Return error if any issues arise
-        print(f"Error writing to file: {e}\n")
+        print(f"Error writing to file: {e}")
  
 def input8(): # Helper function when input == 8
     # Load routes and shapes from a pickle
@@ -225,7 +225,7 @@ def input8(): # Helper function when input == 8
         return route_data, shapes_data
     
     except Exception as e:  #  If file not found or invalid filename display error
-        print(f"Error reading from file: {e}\n")
+        print(f"Error reading from file: {e}")
         
         return {}, {}  # Return empty dictionaries so program doesn't crash
 
@@ -264,7 +264,7 @@ Edmonton Transit System
             user_input = None        
 
         if user_input not in [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0]:
-            print("Invalid option\n")
+            print("Invalid option")
         if user_input == 0: # end loop
             quit = True
             return
