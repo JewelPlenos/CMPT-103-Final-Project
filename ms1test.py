@@ -67,6 +67,8 @@ def load_disruption(filename):
     with open(filename, 'r') as file:
         for line in file:
             parts = line.split(',')
+            if parts[0] == "Disruption ID":
+                continue  # skips first row
             finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
             date_object = date(int(finish_date[2]), month2number[finish_date[0]], int(finish_date[1].strip(','))) # --> date(year, month, day) = 2026-09-30
             location = parts[-1] # --> 'POINT (-113.58983573962888 53.425074385191095)'
