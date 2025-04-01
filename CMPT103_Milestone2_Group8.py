@@ -228,7 +228,7 @@ def input8(): # Helper function when input == 8
             loaded_data = pickle.load(f)
         
         # Inform success    
-        print(f"Data successfully loaded from {filename}\n")
+        print(f"Data successfully loaded from {filename}")
         
         # Retrieve route and shapes from dict and if not present default to empty dict
         route_data = loaded_data.get("route_data", {})
@@ -293,24 +293,24 @@ Edmonton Transit System
             try:
                 print_shape_id(route_data) # uses helper function -> prints shape id of user inputted route number
             except UnboundLocalError: # Error checking, will trigger error since it tries to access route_data but it does not exist yet
-                print("Route data hasn't been loaded yet\n")
+                print("Route data hasn't been loaded yet")
         if user_input == 5:             
             try:
                 print_coords(shapes_data) # uses helper function -> prints coordinates of user inputted shape_id
             except UnboundLocalError: # Error checking, will trigger error since it tries to access shapes_data but it does not exist yet
-                print("Shape ID data hasn't been loaded yet\n")
+                print("Shape ID data hasn't been loaded yet")
 
         if user_input == 6:
             try:
                 input6(route_data, shapes_data)
             except UnboundLocalError: # Error checking, will trigger error since it tries to access route_data but it does not exist yet
-                print("Route data hasn't been loaded yet\n")
+                print("Route data hasn't been loaded yet")
 
         if user_input == 7:
             try:
                 input7(route_data, shapes_data, disruption_data)
             except UnboundLocalError: 
-                print("Route data and Shape ID has not been loaded yet\n")
+                print("Route data and Shape ID has not been loaded yet")
         if user_input == 8:
             route_data, shapes_data, disruption_data = input8()
 
