@@ -128,20 +128,20 @@ def input3() -> dict: # Helper function when input == 3
     Return: Dictionary of disruptions and locations
     '''
     input_file = input('Enter a filename: ').strip()
-    try: 
-        if input_file == '':
-            input_file = 'data/traffic_disruptions.txt'
-        disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
-        print(f'Data from {input_file} loaded\n')
-        return disruption_data
+    #try: 
+    if input_file == '':
+        input_file = 'data/traffic_disruptions.txt'
+    disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
+    print(f'Data from {input_file} loaded\n')
+    return disruption_data
 
-    except TypeError: 
-        return print(f"skib IO Error: couldn't open {input_file}\n")
-    except IOError as fail: 
-        return print(f"idy IO Error: couldn't open {input_file}\n")
-    except IndexError as fail: 
-        print(fail)
-        return print(f"toil IO Error: couldn't open {input_file}\n")
+    #except TypeError: 
+        #return print(f"skib IO Error: couldn't open {input_file}\n")
+    #except IOError as fail: 
+        #return print(f"idy IO Error: couldn't open {input_file}\n")
+    #except IndexError as fail: 
+        #print(fail)
+        #return print(f"toil IO Error: couldn't open {input_file}\n")
 
 
 def print_shape_id(route_data): # Helper function when input == 4 
