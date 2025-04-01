@@ -189,7 +189,7 @@ def input7(route_data, shapes_data): # Helper function when input ==  7
     import pickle
     filename = input("Enter a filename: ").strip()
     if filename == "":  # If filename empty use default name
-        filename = "etsdata.p"
+        filename = "data/etsdata.p"
     
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
