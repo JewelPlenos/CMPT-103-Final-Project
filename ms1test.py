@@ -69,11 +69,12 @@ def load_disruption(filename):
             parts = line.split(',')
             if parts[0] == "Disruption ID":
                 continue  # skips first row
-            finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
-            date_object = date(int(finish_date[2]), month2number[finish_date[0]], int(finish_date[1].strip(','))) # --> date(year, month, day) = 2026-09-30
+            finish_date = parts[5].lstrip('"') + parts[6].strip('"') # --> 'Sep 30 2026'
+            lst = finish_date.split(' ') # --> ['Sep', '30', '2026']
+            date_object = date(int(lst[2]), month2number[lst[0]], int(lst[1])) # --> date(year, month, day) = 2026-09-30
             location = parts[-1] # --> 'POINT (-113.58983573962888 53.425074385191095)'
             coords = location.split(' ')
-            lon, lat = float(coords[1].lstrip('(')), float(coords[2].strip(')')) # unpack, change to float and remove extra characters 
+            lon, lat = float(coords[1].lstrip('(')), float(coords[2].strip('\n').replace(')', '')) # unpack, change to float and remove extra characters 
             date_location[date_object] = lat, lon # --> {2026-09-30: 53.425074385191095, -113.58983573962888}
     return date_location
 
@@ -128,20 +129,20 @@ def input3() -> dict: # Helper function when input == 3
     Return: Dictionary of disruptions and locations
     '''
     input_file = input('Enter a filename: ').strip()
-    #try: 
-    if input_file == '':
-        input_file = 'data/traffic_disruptions.txt'
-    disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
-    print(f'Data from {input_file} loaded\n')
-    return disruption_data
+    try: 
+        if input_file == '':
+            input_file = 'data/traffic_disruptions.txt'
+        disruption_data = load_disruption(input_file) # Utilizes load_disruption helper function 
+        print(f'Data from {input_file} loaded\n')
+        return disruption_data
 
-    #except TypeError: 
-        #return print(f"skib IO Error: couldn't open {input_file}\n")
-    #except IOError as fail: 
-        #return print(f"idy IO Error: couldn't open {input_file}\n")
-    #except IndexError as fail: 
-        #print(fail)
-        #return print(f"toil IO Error: couldn't open {input_file}\n")
+    except TypeError: 
+        return print(f"skib IO Error: couldn't open {input_file}\n")
+    except IOError as fail: 
+        return print(f"idy IO Error: couldn't open {input_file}\n")
+    except IndexError as fail: 
+        print(fail)
+        return print(f"toil IO Error: couldn't open {input_file}\n")
 
 
 def print_shape_id(route_data): # Helper function when input == 4 

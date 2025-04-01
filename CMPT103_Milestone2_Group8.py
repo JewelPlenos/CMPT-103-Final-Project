@@ -69,9 +69,14 @@ def load_disruption(filename):
             parts = line.split(',')
             finish_date = parts[3].split(' ') # --> ['Sep', '30,', '2026']
             date_object = date(int(finish_date[2]), month2number[finish_date[0]], int(finish_date[1].strip(','))) # --> date(year, month, day) = 2026-09-30
+            if parts[0] == "Disruption ID":
+                continue  # skips first row
+            finish_date = parts[5].lstrip('"') + parts[6].strip('"') # --> 'Sep 30 2026'
+            lst = finish_date.split(' ') # --> ['Sep', '30', '2026']
+            date_object = date(int(lst[2]), month2number[lst[0]], int(lst[1])) # --> date(year, month, day) = 2026-09-30
             location = parts[-1] # --> 'POINT (-113.58983573962888 53.425074385191095)'
             coords = location.split(' ')
-            lon, lat = float(coords[1].lstrip('(')), float(coords[2].strip(')')) # unpack, change to float and remove extra characters 
+            lon, lat = float(coords[1].lstrip('(')), float(coords[2].strip('\n').replace(')', '')) # unpack, change to float and remove extra characters 
             date_location[date_object] = lat, lon # --> {2026-09-30: 53.425074385191095, -113.58983573962888}
     return date_location
 
@@ -134,11 +139,11 @@ def input3() -> dict: # Helper function when input == 3
         return disruption_data
 
     except TypeError: 
-        return print(f"skib IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
     except IOError as fail: 
-        return print(f"idy IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
     except IndexError: 
-        return print(f"toil IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
 
 
 def print_shape_id(route_data): # Helper function when input == 4 
@@ -238,7 +243,7 @@ def main():
     while not quit:
         print('Edmonton Transit System') 
         print('---------------------------------')
-        print('(1) Load route data\n(2) Load shapes data\n(3) Reserved for future use\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n')
+        print('(1) Load route data\n(2) Load shapes data\n(3) Load disruptions data\n\n(4) Print shape IDs for a route\n(5) Print coordinates for a shape ID\n(6) Reserved for future use\n\n(7) Save routes and shapes in a pickle\n(8) Load routes and shapes from a pickle\n\n(9) Reserved for future use\n(0) Quit\n')
 
         try:
             user_input = int(input('Enter a command: ')) # Will result in an error if input is not a number since it changes input to an int
