@@ -308,11 +308,11 @@ Edmonton Transit System
 
         if user_input == 7:
             try:
-                input7(route_data, shapes_data)
+                input7(route_data, shapes_data, disruption_data)
             except UnboundLocalError: 
                 print("Route data and Shape ID has not been loaded yet\n")
         if user_input == 8:
-            route_data, shapes_data,disruption_data = input8()
+            route_data, shapes_data, disruption_data = input8()
 
 if __name__ == '__main__':
     main()
