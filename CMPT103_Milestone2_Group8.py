@@ -175,9 +175,21 @@ def print_coords(shapes_data): # Helper function when input == 5
     except KeyError:
         return print('\t** NOT FOUND **')
 
-def input6(): # Helper function when input == 6
-
-    pass 
+def input6(route_data, shapes_data): # Helper function when input == 6
+    input_route = input('Enter route ID: ').strip()
+    current_length = 0
+    length_longest = 0
+    shape_longest = 0
+    try:
+        for item in route_data[input_route]['shape_ids']: 
+            for coords in shapes_data[item]:
+                current_length = len(coords)
+                if len(current_length) > length_longest: 
+                    length_longest = current_length
+                    shape_longest = item # item is shape id
+        print(f'The longest shape for {input_route} is {shape_longest} with {length_longest} coordinates')
+    except KeyError:
+        return print('\t** NOT FOUND **')
 
 def input7(route_data, shapes_data): # Helper function when input ==  7
     '''
@@ -288,7 +300,10 @@ Edmonton Transit System
                 print("Shape ID data hasn't been loaded yet\n")
 
         if user_input == 6:
-            pass
+            try:
+                input6(route_data, shapes_data)
+            except UnboundLocalError: # Error checking, will trigger error since it tries to access route_data but it does not exist yet
+                print("Route data hasn't been loaded yet\n")
 
         if user_input == 7:
             try:
