@@ -187,11 +187,11 @@ def input6(route_data, shapes_data): # Helper function when input == 6
                 if current_length > length_longest: 
                     length_longest = current_length
                     shape_longest = item # item is shape id
-        print(f'The longest shape for {input_route} is {shape_longest} with {length_longest} coordinates')
+        print(f'\nThe longest shape for {input_route} is {shape_longest} with {length_longest} coordinates')
     except KeyError:
         return print('\t** NOT FOUND **')
 
-def input7(route_data, shapes_data): # Helper function when input ==  7
+def input7(route_data, shapes_data, disruption_data): # Helper function when input ==  7
     '''
     Purpose: Save routes and shapes into a pickle file
     Parameter: route_data, dict containing route data
@@ -205,7 +205,7 @@ def input7(route_data, shapes_data): # Helper function when input ==  7
     
     try:  
         with open(filename, 'wb') as f:  # Write to file in binary
-            pickle.dump({"route_data": route_data, "shapes_data": shapes_data}, f)  # Serialize and save dict
+            pickle.dump({"route_data": route_data, "shapes_data": shapes_data, "disruption_data": disruption_data}, f)  # Serialize and save dict
         print(f"Data structures successfully written to {filename}")
     except Exception as e:  # Return error if any issues arise
         print(f"Error writing to file: {e}")
@@ -233,6 +233,7 @@ def input8(): # Helper function when input == 8
         # Retrieve route and shapes from dict and if not present default to empty dict
         route_data = loaded_data.get("route_data", {})
         shapes_data = loaded_data.get("shapes_data", {})
+        disruption_data = loaded_data.get("disruption_data", {})
          # Return as tuple
         return route_data, shapes_data
     
@@ -311,7 +312,7 @@ Edmonton Transit System
             except UnboundLocalError: 
                 print("Route data and Shape ID has not been loaded yet\n")
         if user_input == 8:
-            route_data, shapes_data = input8()
+            route_data, shapes_data,disruption_data = input8()
 
 if __name__ == '__main__':
     main()
