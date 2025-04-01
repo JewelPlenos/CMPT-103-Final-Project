@@ -137,12 +137,12 @@ def input3() -> dict: # Helper function when input == 3
         return disruption_data
 
     except TypeError: 
-        return print(f"skib IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
     except IOError as fail: 
-        return print(f"idy IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
     except IndexError as fail: 
         print(fail)
-        return print(f"toil IO Error: couldn't open {input_file}\n")
+        return print(f"IO Error: couldn't open {input_file}\n")
 
 
 def print_shape_id(route_data): # Helper function when input == 4 
