@@ -296,7 +296,24 @@ def graphical_interface(): # Helper function for input9
     
     return win, search_button, clear_button, from_entry, to_entry
 
-
+def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, routes):
+    
+    while True:
+            click_coord = win.getMouse()  # Get location of mouse click
+            if in_rectangle(click_coord, search_button):
+                start_point = from_entry.getText().strip
+                end_point = to_entry.getText().strip()
+                if start_point and end_point:
+                    for route_id in routes:
+                        name = routes[route_id]['route_name'].split(' _ ')
+            else: 
+                print("Route not found.")
+            
+            if in_rectangle(click_coord, clear_button):
+            # Undraw all the lines drawn so far.
+                for line in drawn_lines:
+                    line.undraw()
+                drawn_lines = []
     
     
 
