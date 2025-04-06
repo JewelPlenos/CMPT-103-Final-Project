@@ -245,13 +245,12 @@ def input8(): # Helper function when input == 8
     
 
 def graphical_interface(): # Helper function for input9
-    # Setup window
     '''
     Purpose: Lay out the gui and background
     Parameter: None
     Return: the GraphWin obj and all the buttons
     '''    
-    win_width = 800
+    win_width = 800  # Create win
     win_height = 920
     win = GraphWin("ETS Data", win_width, win_height)
  
@@ -293,51 +292,17 @@ def graphical_interface(): # Helper function for input9
     clear_text.setStyle("bold")
     clear_text.draw(win)    
     
-    click_coord = win.getMouse()
+    click_coord = win.getMouse()  # Obtain coordinate of mouse click
     
     return win, search_button, clear_button, from_entry, to_entry
 
-def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, routes):
-    
-    while True:
-            click_coord = win.getMouse()
-            if in_rectangle(click_coord, search_button):
-                start_point = from_entry.getText().strip
-                end_point = to_entry.getText().strip()
-                if start_point and end_point:
-                    for route_id in routes:
-                        name = routes[route_id]['route_name'].split(' _ ')
-            else: 
-                print("Route not found.")
-            
-            if in_rectangle(click_coord, clear_button):
-            # Undraw all the lines drawn so far.
-                for line in drawn_lines:
-                    line.undraw()
-                drawn_lines = []
-    
-def in_rectangle(click_coord, rect): 
-    # Get the two corner points of the rectangle.
-    p1 = rect.getP1()
-    p2 = rect.getP2()
-    
-    # Calculate the minimum and maximum x and y values from the two points.
-    left = min(p1.getX(), p2.getX())
-    right = max(p1.getX(), p2.getX())
-    top = min(p1.getY(), p2.getY())
-    bottom = max(p1.getY(), p2.getY())
-    
-    # Return True if click_coord's coordinates fall within the rectangle's boundaries.
-    return (left <= click_coord.getX() <= right) and (top <= click_coord.getY() <= bottom)
+
     
     
 
 def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
-    win, search_button, clear_button, from_entry, to_entry = graphical_interface()
-    draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_data, route_data)
+    graphical_interface()
     
-
-
 
 
 # Main 
