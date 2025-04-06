@@ -1,6 +1,6 @@
 # ------------------------------- # 
 # Group members: Jewel Plenos, Tommy Tran 
-# Programming Project - Milestone#1
+# Programming Project - Milestone#2
 # ------------------------------- #
 
 from datetime import date
