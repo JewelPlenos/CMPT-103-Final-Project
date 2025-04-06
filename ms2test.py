@@ -292,7 +292,7 @@ def graphical_interface(): # Helper function for input9
     clear_text.setStyle("bold")
     clear_text.draw(win)    
     
-    click_coord = win.getMouse()  # Obtain coordinate of mouse click
+    click_point = win.getMouse()  # Obtain coordinate of mouse click
     
     return win, search_button, clear_button, from_entry, to_entry
 
@@ -318,7 +318,7 @@ def lonlat_to_xy(win, lon, lat):
     return int(x), int(y)
 
 # Unfinished
-def in_rectangle(click_coord, rect) -> bool:
+def in_rect(click_point, rect) -> bool:
     '''
     Purpose: Check if click_coord is within a given rectangle
     Parameters: click_coord, rect
@@ -326,13 +326,13 @@ def in_rectangle(click_coord, rect) -> bool:
     '''    
     p1 = rect.getP1()
     p2 = rect.getP2()
-    return (min(p1.getX(), p2.getX()) <= click_coord.getX() <= max(p1.getX(), p2.getX()) and min(p1.getY(), p2.getY()) <= click_coord.getY() <= max(p1.getY(), p2.getY()))
+    return (min(p1.getX(), p2.getX()) <= click_point.getX() <= max(p1.getX(), p2.getX()) and min(p1.getY(), p2.getY()) <= click_point.getY() <= max(p1.getY(), p2.getY()))
 
 # Unfinished
 def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_data, route_data):
     while True:
-            click_coord = win.getMouse()  # Get location of mouse click
-            if in_rectangle(click_coord, search_button):
+            click_point = win.getMouse()  # Get location of mouse click
+            if in_rect(click_point, search_button):
                 start_point = from_entry.getText().strip
                 end_point = to_entry.getText().strip()
                 if start_point and end_point:
@@ -341,7 +341,7 @@ def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_d
             else: 
                 print("Route not found.")
             
-            if in_rectangle(click_coord, clear_button):
+            if in_rect(click_point, clear_button):
             # Undraw all the lines drawn so far.
                 for line in drawn_lines:
                     line.undraw()
