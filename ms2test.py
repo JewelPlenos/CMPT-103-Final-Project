@@ -345,7 +345,7 @@ def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_d
                 drawn_lines = []
     
     
-def input9(): # Helper function when input == 9
+def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
     graphical_interface()
     
 # Main 
