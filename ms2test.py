@@ -243,7 +243,7 @@ def input8(): # Helper function when input == 8
         
         return {}, {}  # Return empty dictionaries so program doesn't crash
     
-
+# Unfinished
 def graphical_interface(): # Helper function for input9
     '''
     Purpose: Lay out the gui and background
@@ -296,6 +296,8 @@ def graphical_interface(): # Helper function for input9
     
     return win, search_button, clear_button, from_entry, to_entry
 
+
+# Unfinished
 def lonlat_to_xy(win, lon, lat):
     '''Written by Philip Mees for CMPT 103
     Purpose: convert longitude/latitude locations to x/y pixel locations
@@ -315,6 +317,7 @@ def lonlat_to_xy(win, lon, lat):
 
     return int(x), int(y)
 
+# Unfinished
 def in_rectangle(click_coord, rect) -> bool:
     '''
     Purpose: Check if click_coord is within a given rectangle
@@ -325,8 +328,8 @@ def in_rectangle(click_coord, rect) -> bool:
     p2 = rect.getP2()
     return (min(p1.getX(), p2.getX()) <= click_coord.getX() <= max(p1.getX(), p2.getX()) and min(p1.getY(), p2.getY()) <= click_coord.getY() <= max(p1.getY(), p2.getY()))
 
+# Unfinished
 def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_data, route_data):
-    
     while True:
             click_coord = win.getMouse()  # Get location of mouse click
             if in_rectangle(click_coord, search_button):
@@ -343,8 +346,8 @@ def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_d
                 for line in drawn_lines:
                     line.undraw()
                 drawn_lines = []
-    
-    
+
+# Unfinished    
 def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
     graphical_interface()
     
