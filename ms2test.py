@@ -296,7 +296,36 @@ def graphical_interface(): # Helper function for input9
     
     return win, search_button, clear_button, from_entry, to_entry
 
-def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, routes):
+def lonlat_to_xy(win, lon, lat):
+    '''Written by Philip Mees for CMPT 103
+    Purpose: convert longitude/latitude locations to x/y pixel locations
+        This avoids the use of the setCoords, toWorld, and toScreen methods and graphics.py incompatibilities
+    Parameters:
+        win (GraphWin): the GraphWin object of the GUI
+        lon, lat (float): longitude and latitude to be converted
+    Returns: x, y (int): pixel location inside win'''
+
+    xlow, xhigh = -113.720049, -113.320418
+    ylow, yhigh = 53.657116, 53.393703
+
+    width, height = win.getWidth(), win.getHeight()
+
+    x = (lon - xlow) / (xhigh - xlow) * width
+    y = (lat - ylow) / (yhigh - ylow) * height
+
+    return int(x), int(y)
+
+def in_rectangle(click_coord, rect) -> bool:
+    '''
+    Purpose: Check if click_coord is within a given rectangle
+    Parameters: click_coord, rect
+    Return: In rect OR not in rect
+    '''    
+    p1 = rect.getP1()
+    p2 = rect.getP2()
+    return (min(p1.getX(), p2.getX()) <= click_coord.getX() <= max(p1.getX(), p2.getX()) and min(p1.getY(), p2.getY()) <= click_coord.getY() <= max(p1.getY(), p2.getY()))
+
+def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_data, route_data):
     
     while True:
             click_coord = win.getMouse()  # Get location of mouse click
@@ -304,8 +333,8 @@ def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, 
                 start_point = from_entry.getText().strip
                 end_point = to_entry.getText().strip()
                 if start_point and end_point:
-                    for route_id in routes:
-                        name = routes[route_id]['route_name'].split(' _ ')
+                    for route_id in route_data:
+                        name = route_data[route_id]['route_name'].split(' _ ')
             else: 
                 print("Route not found.")
             
@@ -316,12 +345,9 @@ def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, 
                 drawn_lines = []
     
     
-
-def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
+def input9(): # Helper function when input == 9
     graphical_interface()
     
-
-
 # Main 
 def main(): 
     quit = False 
