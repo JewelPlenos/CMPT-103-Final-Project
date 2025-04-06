@@ -242,50 +242,102 @@ def input8(): # Helper function when input == 8
         print(f"Error reading from file: {e}")
         
         return {}, {}  # Return empty dictionaries so program doesn't crash
-
-
-def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
     
-     # --- Window Setup ---
+
+def graphical_interface(): # Helper function for input9
+    # Setup window
+    '''
+    Purpose: Lay out the gui and background
+    Parameter: None
+    Return: the GraphWin obj and all the buttons
+    '''    
     win_width = 800
     win_height = 920
     win = GraphWin("ETS Data", win_width, win_height)
-
-    # Draw the background map image (assumes "edmonton.png" is in the same folder).
-    # We'll center it in the window by specifying the center point.
+ 
+    # Center and draw the background img
     bg_image = Image(Point(win_width / 2, win_height / 2), "edmonton.png")
     bg_image.draw(win)
-
-    # --- Create UI Elements (Labels, Text Fields, Buttons) ---
-    # "From:" label and text field
-    from_label = Text(Point(20, 30), "From:")
-    from_label.draw(win)
-    from_entry = Entry(Point(120, 30), 25)  
+ 
+    # Create ui elements
+    from_text = Text(Point(25, 35), "From:")
+    from_text.setStyle("bold")
+    from_text.draw(win)
+    from_entry = Entry(Point(100, 35), 15)
     from_entry.draw(win)
     from_entry.setFill("white")
-
-    # "To:" label and text field
-    to_label = Text(Point(20, 60), "To:")
-    to_label.draw(win)
-    to_entry = Entry(Point(120, 60), 25)
+ 
+    # To text and entry
+    to_text = Text(Point(32, 65), "To:")
+    to_text.setStyle("bold")
+    to_text.draw(win)
+    to_entry = Entry(Point(100, 65), 15)
     to_entry.draw(win)
     to_entry.setFill("white")
-
-    # "Search" button
-    search_button = Rectangle(Point(20, 90), Point(150, 120))
+ 
+    # Search Button
+    search_button = Rectangle(Point(42, 90), Point(130, 110))
     search_button.setFill("peru")
     search_button.draw(win)
     search_button.setWidth(3)
     search_text = Text(search_button.getCenter(), "Search")
+    search_text.setStyle("bold")
     search_text.draw(win)
-
-    # "Clear" button
-    clear_button = Rectangle(Point(20, 130), Point(150, 160))
+ 
+    # Clear button
+    clear_button = Rectangle(Point(42, 115), Point(130, 135))
     clear_button.setFill("peru")
     clear_button.draw(win)
     clear_button.setWidth(3)
     clear_text = Text(clear_button.getCenter(), "Clear")
-    clear_text.draw(win)
+    clear_text.setStyle("bold")
+    clear_text.draw(win)    
+    
+    click_coord = win.getMouse()
+    
+    return win, search_button, clear_button, from_entry, to_entry
+
+def draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes, routes):
+    
+    while True:
+            click_coord = win.getMouse()
+            if in_rectangle(click_coord, search_button):
+                start_point = from_entry.getText().strip
+                end_point = to_entry.getText().strip()
+                if start_point and end_point:
+                    for route_id in routes:
+                        name = routes[route_id]['route_name'].split(' _ ')
+            else: 
+                print("Route not found.")
+            
+            if in_rectangle(click_coord, clear_button):
+            # Undraw all the lines drawn so far.
+                for line in drawn_lines:
+                    line.undraw()
+                drawn_lines = []
+    
+def in_rectangle(click_coord, rect): 
+    # Get the two corner points of the rectangle.
+    p1 = rect.getP1()
+    p2 = rect.getP2()
+    
+    # Calculate the minimum and maximum x and y values from the two points.
+    left = min(p1.getX(), p2.getX())
+    right = max(p1.getX(), p2.getX())
+    top = min(p1.getY(), p2.getY())
+    bottom = max(p1.getY(), p2.getY())
+    
+    # Return True if click_coord's coordinates fall within the rectangle's boundaries.
+    return (left <= click_coord.getX() <= right) and (top <= click_coord.getY() <= bottom)
+    
+    
+
+def input9(route_data, shapes_data, disruption_data): # Helper function when input == 9
+    win, search_button, clear_button, from_entry, to_entry = graphical_interface()
+    draw_routes(win, from_entry, to_entry, search_button, clear_button, shapes_data, route_data)
+    
+
+
 
 
 # Main 
