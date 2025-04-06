@@ -4,7 +4,7 @@
 # ------------------------------- #
 
 from datetime import date
-from graphics import *
+from graphics4 import *
 
 # Load route data
 def load_route(routefilename, tripsfilename) -> dict:
@@ -286,9 +286,6 @@ def input9(route_data, shapes_data, disruption_data): # Helper function when inp
     clear_button.setWidth(3)
     clear_text = Text(clear_button.getCenter(), "Clear")
     clear_text.draw(win)
-
-
-
 
 
 # Main 
